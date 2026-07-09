@@ -12,6 +12,12 @@ jobs:
           distribution: 'temurin'
       - name: Install Gradle
         uses: gradle/actions/setup-gradle@v4
+      - name: Initialize Gradle Project
+        run: |
+          if [ ! -f "settings.gradle" ]; then
+            gradle init --type basic --dsl groovy --package app --project-name HayyaTV
+            echo "include ':app'" >> settings.gradle
+          fi
       - name: Build with Gradle
         run: gradle assembleDebug
       - name: Upload APK
